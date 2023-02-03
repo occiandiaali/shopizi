@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20%;
+}
+.logo {
+  height: 170px;
+}
+
+ion-img::part(image) {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.result-card {
+  height: 250px;
+  padding: 6px;
+  background-color: wheat;
+}
