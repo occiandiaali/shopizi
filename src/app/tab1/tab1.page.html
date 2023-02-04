@@ -19,12 +19,27 @@
       ></ion-img>
     </div>
     <ion-card *ngIf="scanResult" class="result-card">
+      <ion-icon
+        name="close"
+        size="large"
+        color="danger"
+        id="close-icon"
+        (click)="reset()"
+      ></ion-icon>
       <ion-card-header>
-        <ion-card-title>Result</ion-card-title>
+        <ion-card-title>Your purchase</ion-card-title>
+        <ion-card-subtitle
+          ><span class="bold-info">Checkout:</span> End shopping and pay for
+          this item</ion-card-subtitle
+        >
+        <ion-card-subtitle
+          ><span class="bold-info">Continue:</span> Save this item in cart, so
+          that you can scan and add other items</ion-card-subtitle
+        >
       </ion-card-header>
       <ion-card-content>{{scanResult}}</ion-card-content>
-      <ion-button (click)="reset()">Checkout</ion-button>
-      <ion-button (click)="startScan()">Continue shopping</ion-button>
+      <ion-button (click)="reset()" class="btn">Checkout</ion-button>
+      <ion-button (click)="startScan()" class="btn">Continue</ion-button>
     </ion-card>
 
     <ion-button (click)="startScan()" *ngIf="!scanResult">

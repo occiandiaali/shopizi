@@ -1,17 +1,66 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Tab 2
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Tab 2</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
+  <div class="container">
+    <div class="img-div" *ngIf="qrsrc">
+      <ion-img [src]="qrsrc"></ion-img>
+      <ion-icon
+        name="trash"
+        color="danger"
+        id="bin-icon"
+        size="large"
+        (click)="reset()"
+      ></ion-icon>
+    </div>
+    <ion-label *ngIf="qrsrc === ''" style="font-size: 26px; font-weight: bold"
+      >QR code will show here</ion-label
+    >
+    <!-- <ion-textarea
+      [(ngModel)]="item"
+      [autoGrow]="true"
+      placeholder="Enter item details.."
+    ></ion-textarea> -->
+    <ion-item *ngIf="!qrsrc">
+      <ion-label class="labels">Title</ion-label>
+      <ion-input
+        placeholder="Item title.."
+        type="text"
+        [(ngModel)]="title"
+      ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!qrsrc">
+      <ion-label class="labels">Detail</ion-label>
+      <ion-textarea
+        type="text"
+        [maxlength]="150"
+        [autoGrow]="true"
+        [(ngModel)]="desc"
+        placeholder="Item details.."
+      ></ion-textarea>
+    </ion-item>
+    <ion-item *ngIf="!qrsrc">
+      <ion-label class="labels">Price</ion-label>
+      <ion-input
+        placeholder="Item price.."
+        type="text"
+        [(ngModel)]="price"
+      ></ion-input>
+    </ion-item>
+    <ion-button (click)="generateQR()" color="success"
+      >Generate code</ion-button
+    >
+  </div>
 </ion-content>

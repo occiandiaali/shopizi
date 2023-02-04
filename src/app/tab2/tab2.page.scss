@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20%;
+  flex-direction: column;
+}
+
+.img-div {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+#bin-icon {
+  padding-left: 8px;
+}
+
+ion-button {
+  margin-top: 16px;
+}
+
+ion-item {
+  margin-top: 28px;
+}
+
+ion-label {
+}
+
+ion-textarea {
+  --border-bottom-width: 1px solid #555;
+  --padding-start: 34px;
+}

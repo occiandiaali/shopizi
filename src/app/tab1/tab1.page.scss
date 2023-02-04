@@ -1,3 +1,7 @@
+.btn {
+  margin-left: 18px;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -5,8 +9,17 @@
   flex-direction: column;
   margin-top: 20%;
 }
+
+#close-icon {
+  align-self: flex-end;
+}
+
 .logo {
   height: 170px;
+}
+
+ion-card-title {
+  align-self: center;
 }
 
 ion-img::part(image) {
@@ -16,7 +29,11 @@ ion-img::part(image) {
 }
 
 .result-card {
-  height: 250px;
+  height: 350px;
   padding: 6px;
   background-color: wheat;
+}
+
+span {
+  font-weight: bold;
 }
