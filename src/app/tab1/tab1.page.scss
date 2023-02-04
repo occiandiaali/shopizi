@@ -29,11 +29,19 @@ ion-img::part(image) {
 }
 
 .result-card {
-  height: 350px;
+  height: 370px;
   padding: 6px;
   background-color: wheat;
 }
 
 span {
   font-weight: bold;
+  color: teal;
+}
+
+.video-div {
+  width: 100%;
+  margin: 6px 0px 6px 0px;
+  border: 18px solid rgb(243, 204, 32);
+  border-radius: 18px;
 }

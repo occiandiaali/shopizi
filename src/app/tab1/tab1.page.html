@@ -27,23 +27,35 @@
         (click)="reset()"
       ></ion-icon>
       <ion-card-header>
-        <ion-card-title>Your purchase</ion-card-title>
-        <ion-card-subtitle
+        <!-- <ion-card-title>Your purchase</ion-card-title> -->
+        <ion-card-title>{{title}}</ion-card-title>
+        <ion-card-subtitle>{{price}}</ion-card-subtitle>
+        <!-- <ion-card-subtitle
           ><span class="bold-info">Checkout:</span> End shopping and pay for
           this item</ion-card-subtitle
         >
         <ion-card-subtitle
           ><span class="bold-info">Continue:</span> Save this item in cart, so
           that you can scan and add other items</ion-card-subtitle
-        >
+        > -->
       </ion-card-header>
-      <ion-card-content>{{scanResult}}</ion-card-content>
-      <ion-button (click)="reset()" class="btn">Checkout</ion-button>
-      <ion-button (click)="startScan()" class="btn">Continue</ion-button>
+      <!-- <ion-card-content>{{scanResult}}</ion-card-content> -->
+      <ion-card-content>
+        <h4>{{desc}}</h4>
+        <span class="bold-info">Checkout:</span> End shopping and pay for this
+        item <span class="bold-info">Continue:</span> Save this item in cart, so
+        that you can scan and add other items.
+      </ion-card-content>
+      <ion-button color="secondary" (click)="reset()" class="btn"
+        >Checkout</ion-button
+      >
+      <ion-button color="secondary" (click)="startScan()" class="btn"
+        >Continue</ion-button
+      >
     </ion-card>
 
-    <ion-button (click)="startScan()" *ngIf="!scanResult">
-      <ion-icon slot="start" name="qr-scanner"></ion-icon>
+    <ion-button color="secondary" (click)="startScan()" *ngIf="!scanResult">
+      <ion-icon slot="start" name="qr-code-outline"></ion-icon>
       Scan
     </ion-button>
     <!-- <ion-button (click)="reset()" *ngIf="scanResult">
@@ -51,13 +63,15 @@
       Reset
     </ion-button> -->
     <!-- Show camera stream -->
-    <video #video [hidden]="!scanActive" width="100%"></video>
+    <div class="video-div" [hidden]="!scanActive">
+      <video #video [hidden]="!scanActive" width="100%"></video>
+    </div>
 
     <!-- Render camera stream image or receipt text -->
     <canvas #canvas hidden></canvas>
 
     <!-- Stop scan preview if active -->
-    <ion-button (click)="stopScan()" *ngIf="scanActive">
+    <ion-button color="secondary" (click)="stopScan()" *ngIf="scanActive">
       <ion-icon slot="start" name="close"></ion-icon>
       Stop scan
     </ion-button>

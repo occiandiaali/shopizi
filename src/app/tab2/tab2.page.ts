@@ -50,9 +50,9 @@ export class Tab2Page {
   generateQR() {
     // this.showQrToast();
     const qrinfo = `
-    Title: ${this.title}
-    Description: ${this.desc} 
-    Price: ${this.price}
+    Title ${this.title}
+    Description ${this.desc} 
+    Price ${this.price}
     `;
 
     this.qrsrc = `http://api.qrserver.com/v1/create-qr-code/?data=${qrinfo}`;

@@ -17,6 +17,9 @@ export class Tab1Page {
   canvasContext: any;
   scanActive = false;
   scanResult: string | URL | undefined;
+  title: string | undefined;
+  desc: string | undefined;
+  price: string | undefined;
   loading: HTMLIonLoadingElement | null | undefined;
 
   constructor(
@@ -113,6 +116,21 @@ export class Tab1Page {
       if (code) {
         this.scanActive = false;
         this.scanResult = code.data;
+        this.title = this.scanResult.substring(
+          this.scanResult.indexOf('Title'),
+          this.scanResult.indexOf('Description')
+        );
+        this.desc = this.scanResult.substring(
+          this.scanResult.indexOf('Description'),
+          this.scanResult.indexOf('Price')
+        );
+        this.price = this.scanResult.substring(
+          this.scanResult.indexOf('Price')
+        );
+        console.log('Scan ran ', this.scanResult);
+        console.log(this.title);
+        console.log(this.price);
+        console.log(this.desc);
         this.showQrToast();
       } else {
         if (this.scanActive) {
