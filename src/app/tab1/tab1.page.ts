@@ -1,5 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { LoadingController, Platform, ToastController } from '@ionic/angular';
+import {
+  LoadingController,
+  ModalController,
+  Platform,
+  ToastController,
+} from '@ionic/angular';
+import { CartModalPage } from '../cart-modal/cart-modal.page';
+import { ModalPopupPage } from '../modal-popup/modal-popup.page';
+
 import jsQR from 'jsqr';
 
 @Component({
@@ -11,6 +19,8 @@ export class Tab1Page {
   @ViewChild('video', { static: false }) video: ElementRef | undefined;
   @ViewChild('canvas', { static: false }) canvas: ElementRef | undefined;
   // @ViewChild('fileinput', { static: false }) fileinput: ElementRef;
+
+  modalData: any;
 
   canvasElement: any;
   videoElement: any;
@@ -25,6 +35,7 @@ export class Tab1Page {
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
     private plt: Platform
   ) {
     // const isInStandaloneMode = () =>
@@ -34,6 +45,31 @@ export class Tab1Page {
     //   // E.g. hide the scan functionality!
     // }
   }
+
+  async presentModal() {
+    const modal = await this.modalCtrl.create({
+      component: CartModalPage,
+      breakpoints: [0, 0.3, 0.5, 0.8],
+      initialBreakpoint: 0.5,
+    });
+    await modal.present();
+  }
+
+  // async openIonModal() {
+  //   const modal = await this.modalCtrl.create({
+  //     component: ModalPopupPage,
+  //     componentProps: {
+  //       modal_title: 'Your shopping cart',
+  //     },
+  //   });
+  //   modal.onDidDismiss().then((mData) => {
+  //     if (mData !== null) {
+  //       this.modalData = mData;
+  //       console.log('Modal data: ', this.modalData.data);
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
 
   ngAfterViewInit() {
     this.canvasElement = this.canvas?.nativeElement;
