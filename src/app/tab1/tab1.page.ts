@@ -6,7 +6,6 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
-import { ModalPopupPage } from '../modal-popup/modal-popup.page';
 
 import jsQR from 'jsqr';
 
@@ -54,22 +53,6 @@ export class Tab1Page {
     });
     await modal.present();
   }
-
-  // async openIonModal() {
-  //   const modal = await this.modalCtrl.create({
-  //     component: ModalPopupPage,
-  //     componentProps: {
-  //       modal_title: 'Your shopping cart',
-  //     },
-  //   });
-  //   modal.onDidDismiss().then((mData) => {
-  //     if (mData !== null) {
-  //       this.modalData = mData;
-  //       console.log('Modal data: ', this.modalData.data);
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
 
   ngAfterViewInit() {
     this.canvasElement = this.canvas?.nativeElement;
