@@ -1,35 +1,10 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Your cart</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-accordion-group>
-    <ion-accordion>
-      <ion-item slot="header">
-        <ion-label>Shopping</ion-label>
-      </ion-item>
-      <ion-list slot="content">
-        <ion-item>
-          <ion-label>{{paramTitle}}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>{{paramPrice}}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>{{paramDesc}}</ion-label>
-        </ion-item>
-
-        <ion-label>Total: {{paramPrice?.substring(6)}}</ion-label>
-      </ion-list>
-    </ion-accordion>
-  </ion-accordion-group>
-</ion-content> -->
-
 <ion-content padding>
   <ion-item center>
-    <ion-label color="danger" class="ion-text-wrap warning">
+    <ion-label
+      *ngIf="cartItems?.length !== 0"
+      color="danger"
+      class="ion-text-wrap warning"
+    >
       WARNING: DO NOT click on TRANSFER DONE until you make payment via
       transfer.
     </ion-label>
@@ -37,8 +12,15 @@
 
   <ion-list [inset]="true">
     <ion-list-header>
-      <ion-label>Your current items</ion-label>
+      <h4>Your current items</h4>
     </ion-list-header>
+    <ion-label *ngIf="cartItems?.length === 0"
+      >Oops! Looks like you have not scanned any items, yet.</ion-label
+    >
+    <p *ngIf="cartItems?.length === 0">
+      Your cart icon will turn green when you begin adding items.
+      <ion-icon name="cart" color="success" size="medium"></ion-icon>
+    </p>
     <ion-item-sliding *ngFor="let item of cartItems">
       <ion-item padding>
         <ion-label class="ion-text-wrap">{{item.title}} </ion-label>
@@ -51,24 +33,30 @@
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger">
-          <ion-icon slot="icon-only" size="small" name="trash"></ion-icon>
+          <ion-icon
+            slot="icon-only"
+            size="small"
+            name="trash"
+            (click)="removeCartItem(item)"
+          ></ion-icon>
         </ion-item-option>
       </ion-item-options>
-      <!-- <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{item.title}}</ion-card-title>
-          <ion-card-subtitle>{{item.price}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>{{item.desc}}</ion-card-content>
-      </ion-card> -->
     </ion-item-sliding>
   </ion-list>
   <ion-item>
-    <ion-label class="ion-text-wrap" style="font-weight: bold"
+    <ion-label
+      *ngIf="cartItems?.length !== 0"
+      class="ion-text-wrap"
+      style="font-weight: bold"
       >Transfer <span>{{total}}</span> naira to UBA no. 001089550
       now.</ion-label
     >
   </ion-item>
 
-  <ion-button class="transfer-btn" color="secondary">Transfer done</ion-button>
+  <ion-button
+    *ngIf="cartItems?.length !== 0"
+    class="transfer-btn"
+    color="secondary"
+    >Transfer done</ion-button
+  >
 </ion-content>

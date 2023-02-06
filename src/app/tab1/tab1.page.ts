@@ -35,6 +35,8 @@ export class Tab1Page {
   desc: string | undefined;
   price: string | undefined;
   cartItems: any[] | undefined;
+  cartIsEmpty: boolean | undefined;
+  numberOfItem = 1;
   cartTotal = 0.0;
   loading: HTMLIonLoadingElement | null | undefined;
   // cartIconUsed: any;
@@ -57,24 +59,19 @@ export class Tab1Page {
   ngOnInit() {
     this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
+    this.cartItemCount ? (this.cartIsEmpty = true) : (this.cartIsEmpty = false);
     // this.cartIconUsed = localStorage.getItem('savedCart');
   }
 
   addToCart(product: Product) {
     this.cartService.addProduct(product);
+    this.cartIsEmpty = false;
   }
 
   async presentModal() {
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
-      componentProps: {
-        paramTitle: this.title,
-        paramPrice: this.price,
-        paramDesc: this.desc,
-        cartItems: this.cart,
-        total: this.cartTotal,
-        //cartItems: this.cartService.getCart(),
-      },
+
       breakpoints: [0, 0.3, 0.5, 0.8],
       initialBreakpoint: 0.5,
     });
@@ -106,7 +103,17 @@ export class Tab1Page {
   //         text: 'Dismiss',
   //         role: 'cancel',
   //         side: 'start',
-  //         handler: () => {
+  //         handler: () => {  // increaseProduct(product: Product) {
+  //   for (let [index, p] of this.cart.entries()) {
+  //     if (p.id === product.id) {
+  //       p.amount += 1;
+  //       if (p.amount == 0) {
+  //         this.cart.splice(index, 0, 1);
+  //       }
+  //     }
+  //   }
+  //   this.cartItemCount.next(this.cartItemCount.value - 1);
+  // }
   //           toast.dismiss();
   //         },
   //       },
@@ -177,16 +184,10 @@ export class Tab1Page {
         this.addToCart({
           id: guidd(),
           title: this.title,
-          price: this.price,
-          desc: this.desc,
+          price: parseInt(this.price, 10),
+          description: this.desc,
+          amount: this.numberOfItem,
         });
-        this.cartTotal += parseInt(this.price, 10);
-        // localStorage.setItem('savies', JSON.stringify(this.cart));
-        // console.log('Scan ran ', this.scanResult);
-        // console.log(this.title);
-        // console.log(this.price);
-        // console.log(this.desc);
-        //  this.showQrToast();
       } else {
         if (this.scanActive) {
           requestAnimationFrame(this.scan.bind(this));
@@ -206,11 +207,6 @@ export class Tab1Page {
   }
 
   continueScans() {
-    // localStorage.setItem('saveToCart', JSON.stringify(this.cart));
-    localStorage.clear();
-    console.log('Carts: ', this.cart);
-    console.log('CartCount: ', this.cartService.getCartItemCount());
-    console.log('getCarts: ', this.cartService.getCart());
     this.startScan();
   }
 
