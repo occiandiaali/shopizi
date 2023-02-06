@@ -1,0 +1,32 @@
+ion-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+#info-icon {
+  padding-left: 0.8rem;
+  cursor: pointer;
+}
+
+#item-price {
+  font-weight: bold;
+  padding-left: 1rem;
+}
+
+.modal-warning {
+  margin-top: 16px;
+}
+
+#total-price {
+  margin-left: 40%;
+}
+
+.transfer-btn {
+  margin-top: 24px;
+  margin-left: 25%;
+}
+
+.warning {
+  padding: 8px;
+  font-weight: bold;
+}

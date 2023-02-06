@@ -4,21 +4,22 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () =>
+      import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
-  {
-    path: 'modal-popup',
-    loadChildren: () => import('./modal-popup/modal-popup.module').then( m => m.ModalPopupPageModule)
-  },
+
   {
     path: 'cart-modal',
-    loadChildren: () => import('./cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
-  }
+    loadChildren: () =>
+      import('./cart-modal/cart-modal.module').then(
+        (m) => m.CartModalPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

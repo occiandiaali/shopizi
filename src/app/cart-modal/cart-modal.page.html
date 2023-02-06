@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Your cart</ion-title>
   </ion-toolbar>
@@ -12,18 +12,63 @@
       </ion-item>
       <ion-list slot="content">
         <ion-item>
-          <ion-label>Item One</ion-label>
+          <ion-label>{{paramTitle}}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Item Two</ion-label>
+          <ion-label>{{paramPrice}}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Item Three</ion-label>
+          <ion-label>{{paramDesc}}</ion-label>
         </ion-item>
-        <ion-item>
-          <ion-label>Item Four</ion-label>
-        </ion-item>
+
+        <ion-label>Total: {{paramPrice?.substring(6)}}</ion-label>
       </ion-list>
     </ion-accordion>
   </ion-accordion-group>
+</ion-content> -->
+
+<ion-content padding>
+  <ion-item center>
+    <ion-label color="danger" class="ion-text-wrap warning">
+      WARNING: DO NOT click on TRANSFER DONE until you make payment via
+      transfer.
+    </ion-label>
+  </ion-item>
+
+  <ion-list [inset]="true">
+    <ion-list-header>
+      <ion-label>Your current items</ion-label>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let item of cartItems">
+      <ion-item padding>
+        <ion-label class="ion-text-wrap">{{item.title}} </ion-label>
+        <span id="item-price">{{item.price}}</span>
+        <ion-icon
+          id="info-icon"
+          name="information-circle-outline"
+          size="medium"
+        ></ion-icon>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger">
+          <ion-icon slot="icon-only" size="small" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <!-- <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{item.title}}</ion-card-title>
+          <ion-card-subtitle>{{item.price}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>{{item.desc}}</ion-card-content>
+      </ion-card> -->
+    </ion-item-sliding>
+  </ion-list>
+  <ion-item>
+    <ion-label class="ion-text-wrap" style="font-weight: bold"
+      >Transfer <span>{{total}}</span> naira to UBA no. 001089550
+      now.</ion-label
+    >
+  </ion-item>
+
+  <ion-button class="transfer-btn" color="secondary">Transfer done</ion-button>
 </ion-content>

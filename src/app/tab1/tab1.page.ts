@@ -6,8 +6,11 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
+import { CartService, Product } from '../services/cart.service';
 
+import { BehaviorSubject } from 'rxjs';
 import jsQR from 'jsqr';
+import guidd from 'src/utils/functions/guid';
 
 @Component({
   selector: 'app-tab1',
@@ -20,6 +23,8 @@ export class Tab1Page {
   // @ViewChild('fileinput', { static: false }) fileinput: ElementRef;
 
   modalData: any;
+  cart: Product[] = [];
+  cartItemCount: BehaviorSubject<number> | undefined;
 
   canvasElement: any;
   videoElement: any;
@@ -29,9 +34,13 @@ export class Tab1Page {
   title: string | undefined;
   desc: string | undefined;
   price: string | undefined;
+  cartItems: any[] | undefined;
+  cartTotal = 0.0;
   loading: HTMLIonLoadingElement | null | undefined;
+  // cartIconUsed: any;
 
   constructor(
+    private cartService: CartService,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
@@ -45,13 +54,32 @@ export class Tab1Page {
     // }
   }
 
+  ngOnInit() {
+    this.cart = this.cartService.getCart();
+    this.cartItemCount = this.cartService.getCartItemCount();
+    // this.cartIconUsed = localStorage.getItem('savedCart');
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addProduct(product);
+  }
+
   async presentModal() {
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
+      componentProps: {
+        paramTitle: this.title,
+        paramPrice: this.price,
+        paramDesc: this.desc,
+        cartItems: this.cart,
+        total: this.cartTotal,
+        //cartItems: this.cartService.getCart(),
+      },
       breakpoints: [0, 0.3, 0.5, 0.8],
       initialBreakpoint: 0.5,
     });
     await modal.present();
+    this.reset();
   }
 
   ngAfterViewInit() {
@@ -61,31 +89,31 @@ export class Tab1Page {
   }
 
   // Helper functions
-  async showQrToast() {
-    const toast = await this.toastCtrl.create({
-      //  message: `A weblink has been detected.\nOpen ${this.scanResult}?`,
-      message: `${this.scanResult}`,
-      position: 'bottom',
-      buttons: [
-        {
-          text: 'Open',
-          side: 'start',
-          handler: () => {
-            window.open(this.scanResult, '_system', 'location=yes');
-          },
-        },
-        {
-          text: 'Dismiss',
-          role: 'cancel',
-          side: 'start',
-          handler: () => {
-            toast.dismiss();
-          },
-        },
-      ],
-    });
-    toast.present();
-  }
+  // async showQrToast() {
+  //   const toast = await this.toastCtrl.create({
+  //     //  message: `A weblink has been detected.\nOpen ${this.scanResult}?`,
+  //     message: `${this.scanResult}`,
+  //     position: 'bottom',
+  //     buttons: [
+  //       {
+  //         text: 'Open',
+  //         side: 'start',
+  //         handler: () => {
+  //           window.open(this.scanResult, '_system', 'location=yes');
+  //         },
+  //       },
+  //       {
+  //         text: 'Dismiss',
+  //         role: 'cancel',
+  //         side: 'start',
+  //         handler: () => {
+  //           toast.dismiss();
+  //         },
+  //       },
+  //     ],
+  //   });
+  //   toast.present();
+  // }
 
   async startScan() {
     // Not working on iOS standalone mode!
@@ -136,21 +164,29 @@ export class Tab1Page {
         this.scanActive = false;
         this.scanResult = code.data;
         this.title = this.scanResult.substring(
-          this.scanResult.indexOf('Title'),
+          this.scanResult.indexOf('Title') + 7,
           this.scanResult.indexOf('Description')
         );
         this.desc = this.scanResult.substring(
-          this.scanResult.indexOf('Description'),
+          this.scanResult.indexOf('Description') + 13,
           this.scanResult.indexOf('Price')
         );
         this.price = this.scanResult.substring(
-          this.scanResult.indexOf('Price')
+          this.scanResult.indexOf('Price') + 7
         );
-        console.log('Scan ran ', this.scanResult);
-        console.log(this.title);
-        console.log(this.price);
-        console.log(this.desc);
-        this.showQrToast();
+        this.addToCart({
+          id: guidd(),
+          title: this.title,
+          price: this.price,
+          desc: this.desc,
+        });
+        this.cartTotal += parseInt(this.price, 10);
+        // localStorage.setItem('savies', JSON.stringify(this.cart));
+        // console.log('Scan ran ', this.scanResult);
+        // console.log(this.title);
+        // console.log(this.price);
+        // console.log(this.desc);
+        //  this.showQrToast();
       } else {
         if (this.scanActive) {
           requestAnimationFrame(this.scan.bind(this));
@@ -167,6 +203,15 @@ export class Tab1Page {
 
   stopScan() {
     this.scanActive = false;
+  }
+
+  continueScans() {
+    // localStorage.setItem('saveToCart', JSON.stringify(this.cart));
+    localStorage.clear();
+    console.log('Carts: ', this.cart);
+    console.log('CartCount: ', this.cartService.getCartItemCount());
+    console.log('getCarts: ', this.cartService.getCart());
+    this.startScan();
   }
 
   /**

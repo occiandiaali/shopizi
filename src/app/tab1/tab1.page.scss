@@ -15,7 +15,9 @@
 }
 
 .logo {
+  display: flex;
   height: 170px;
+  // flex-direction: row;
 }
 
 ion-card-title {
@@ -26,6 +28,7 @@ ion-img::part(image) {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  margin-right: 2rem;
 }
 
 .result-card {

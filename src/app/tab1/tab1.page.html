@@ -5,20 +5,22 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
   <div class="container">
     <!-- Results display area -->
     <div class="logo">
+      <ion-icon
+        (click)="presentModal()"
+        name="cart"
+        size="large"
+        color="success"
+        id="cart-icon"
+      ></ion-icon>
       <ion-img
         src="./../../assets/image/logo.png"
         alt="An octopus embracing a white egg"
       ></ion-img>
     </div>
-    <ion-card *ngIf="scanResult" class="result-card">
+    <ion-card *ngIf="scanResult && !scanActive" class="result-card">
       <ion-icon
         name="close"
         size="large"
@@ -49,12 +51,16 @@
       <ion-button color="secondary" (click)="presentModal()" class="btn"
         >Checkout</ion-button
       >
-      <ion-button color="secondary" (click)="startScan()" class="btn"
+      <ion-button color="secondary" (click)="continueScans()" class="btn"
         >Continue</ion-button
       >
     </ion-card>
 
-    <ion-button color="secondary" (click)="startScan()" *ngIf="!scanResult">
+    <ion-button
+      color="secondary"
+      (click)="startScan()"
+      *ngIf="!scanResult && !scanActive"
+    >
       <ion-icon slot="start" name="qr-code-outline"></ion-icon>
       Scan
     </ion-button>
