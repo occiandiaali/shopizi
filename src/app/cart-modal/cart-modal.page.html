@@ -57,6 +57,7 @@
     *ngIf="cartItems?.length !== 0"
     class="transfer-btn"
     color="secondary"
+    (click)="showLoading()"
     >Transfer done</ion-button
   >
 </ion-content>

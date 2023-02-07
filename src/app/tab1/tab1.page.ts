@@ -59,13 +59,19 @@ export class Tab1Page {
   ngOnInit() {
     this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
-    this.cartItemCount ? (this.cartIsEmpty = true) : (this.cartIsEmpty = false);
+    this.cartIsEmpty = this.cartService.emptyCart();
+    //  this.cartItemCount ? (this.cartIsEmpty = true) : (this.cartIsEmpty = false);
     // this.cartIconUsed = localStorage.getItem('savedCart');
   }
 
   addToCart(product: Product) {
     this.cartService.addProduct(product);
     this.cartIsEmpty = false;
+  }
+
+  cartIconAction() {
+    this.cartIsEmpty = this.cartService.emptyCart();
+    this.presentModal();
   }
 
   async presentModal() {

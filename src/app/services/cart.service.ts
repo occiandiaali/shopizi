@@ -25,6 +25,10 @@ export class CartService {
     return this.cartItemCount;
   }
 
+  emptyCart() {
+    return this.cart.length === 0;
+  }
+
   addProduct(product: Product) {
     let added = false;
     for (let p of this.cart) {

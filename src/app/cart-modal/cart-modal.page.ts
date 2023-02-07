@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { CartService, Product } from '../services/cart.service';
 
 @Component({
@@ -16,7 +17,19 @@ export class CartModalPage implements OnInit {
 
   cart: Product[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private loadingCtrl: LoadingController
+  ) {}
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Confirming transfer and preparing receipt..',
+      duration: 5000,
+      spinner: 'bubbles',
+    });
+    loading.present();
+  }
 
   ngOnInit() {
     this.cartItems = this.cartService.getCart();
