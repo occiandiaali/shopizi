@@ -15,11 +15,17 @@
       <h4>Your current items</h4>
     </ion-list-header>
     <ion-label *ngIf="cartItems?.length === 0"
-      >Oops! Looks like you have not scanned any items, yet.</ion-label
+      >You may scan products to add items to your cart.</ion-label
     >
     <p *ngIf="cartItems?.length === 0">
-      Your cart icon will turn green when you begin adding items.
-      <ion-icon name="cart" color="success" size="medium"></ion-icon>
+      Your cart icon will turn green
+      <ion-icon
+        name="cart"
+        color="success"
+        size="large"
+        id="info-green-cart"
+      ></ion-icon>
+      when you begin adding items.
     </p>
     <ion-item-sliding *ngFor="let item of cartItems">
       <ion-item padding>

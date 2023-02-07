@@ -1,5 +1,6 @@
+import { EmailService } from './../services/email.service';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { CartService, Product } from '../services/cart.service';
 
 @Component({
@@ -19,16 +20,32 @@ export class CartModalPage implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private loadingCtrl: LoadingController
+    private emailService: EmailService,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
   ) {}
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Transfer confirmed!',
+      duration: 1500,
+      position: 'middle',
+    });
+    await toast.present();
+  }
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({
       message: 'Confirming transfer and preparing receipt..',
-      duration: 5000,
+      duration: 4000,
       spinner: 'bubbles',
     });
+    this.emailService.sendEmail(this.total);
     loading.present();
+    setTimeout(() => {
+      this.cartService.clearCart();
+      this.presentToast();
+    }, 5000);
   }
 
   ngOnInit() {

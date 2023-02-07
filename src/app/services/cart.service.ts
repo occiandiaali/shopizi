@@ -39,24 +39,11 @@ export class CartService {
       }
     }
     if (!added) {
-      //  product.amount = 1;
       this.cart.push(product);
     }
     this.cartItemCount.next(this.cartItemCount.value + 1);
     this.getCartItemCount();
   }
-
-  // increaseProduct(product: Product) {
-  //   for (let [index, p] of this.cart.entries()) {
-  //     if (p.id === product.id) {
-  //       p.amount += 1;
-  //       if (p.amount == 0) {
-  //         this.cart.splice(index, 0, 1);
-  //       }
-  //     }
-  //   }
-  //   this.cartItemCount.next(this.cartItemCount.value - 1);
-  // }
 
   decreaseProduct(product: Product) {
     for (const [index, p] of this.cart.entries()) {
