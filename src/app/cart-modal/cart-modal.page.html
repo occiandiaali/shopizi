@@ -11,8 +11,22 @@
   </ion-item>
 
   <ion-list [inset]="true">
-    <ion-list-header>
-      <h4>Your current items</h4>
+    <ion-list-header *ngIf="cartItems?.length !== 0">
+      <ion-item>
+        <h2>Your current items</h2>
+        <ion-icon
+          id="info-icon"
+          name="information-circle-outline"
+          size="medium"
+        ></ion-icon>
+        <ion-popover trigger="info-icon" triggerAction="click">
+          <ng-template>
+            <ion-content class="ion-padding">
+              Slide an item left to remove from cart
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
     </ion-list-header>
     <ion-label *ngIf="cartItems?.length === 0"
       >You may scan products to add items to your cart.</ion-label
@@ -31,11 +45,6 @@
       <ion-item padding>
         <ion-label class="ion-text-wrap">{{item.title}} </ion-label>
         <span id="item-price">{{item.price}}</span>
-        <ion-icon
-          id="info-icon"
-          name="information-circle-outline"
-          size="medium"
-        ></ion-icon>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger">
