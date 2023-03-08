@@ -1,3 +1,4 @@
+import { guid } from 'src/utils/functions/guid';
 import { EmailService } from './../services/email.service';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
@@ -18,6 +19,9 @@ export class CartModalPage implements OnInit {
 
   cart: Product[] = [];
 
+  showReceipt = false;
+  transactionId = '';
+
   constructor(
     private cartService: CartService,
     private emailService: EmailService,
@@ -27,8 +31,9 @@ export class CartModalPage implements OnInit {
 
   async presentToast() {
     const toast = await this.toastCtrl.create({
-      message: 'Transfer confirmed!',
-      duration: 1500,
+      message:
+        'Admin has received notice. Please, remain here for confirmation.',
+      duration: 2000,
       position: 'middle',
     });
     await toast.present();
@@ -36,21 +41,30 @@ export class CartModalPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({
-      message: 'Confirming transfer and preparing receipt..',
-      duration: 4000,
+      message: 'Sending notice to admin to confirm payment..',
+      duration: 3500,
       spinner: 'bubbles',
     });
-    this.emailService.sendEmail(this.total);
+    this.transactionId = guid();
     loading.present();
     setTimeout(() => {
+      this.emailService.sendEmail(
+        this.total,
+        this.transactionId,
+        this.cartService.getCart()
+      );
       this.cartService.clearCart();
       this.presentToast();
-    }, 5000);
+      this.emailService.responseStatus === 200
+        ? (this.showReceipt = true)
+        : (this.showReceipt = false);
+    }, 4000);
   }
 
   ngOnInit() {
     this.cartItems = this.cartService.getCart();
     this.total = this.cartService.getTotal();
+    // this.presentingElement = this.ionRouterOutlet.nativeEl;
     // console.log('CartModal cart items: ', this.cartItems);
     // console.log('Title', this.paramTitle);
     // console.log('Price', this.paramPrice);

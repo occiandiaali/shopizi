@@ -10,7 +10,7 @@ import { CartService, Product } from '../services/cart.service';
 
 import { BehaviorSubject } from 'rxjs';
 import jsQR from 'jsqr';
-import guidd from 'src/utils/functions/guid';
+import { guidd } from 'src/utils/functions/guid';
 
 @Component({
   selector: 'app-tab1',
@@ -39,7 +39,6 @@ export class Tab1Page {
   numberOfItem = 1;
   cartTotal = 0.0;
   loading: HTMLIonLoadingElement | null | undefined;
-  // cartIconUsed: any;
 
   constructor(
     private cartService: CartService,
@@ -60,8 +59,6 @@ export class Tab1Page {
     this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
     this.cartIsEmpty = this.cartService.emptyCart();
-    //  this.cartItemCount ? (this.cartIsEmpty = true) : (this.cartIsEmpty = false);
-    // this.cartIconUsed = localStorage.getItem('savedCart');
   }
 
   addToCart(product: Product) {
@@ -92,41 +89,6 @@ export class Tab1Page {
   }
 
   // Helper functions
-  // async showQrToast() {
-  //   const toast = await this.toastCtrl.create({
-  //     //  message: `A weblink has been detected.\nOpen ${this.scanResult}?`,
-  //     message: `${this.scanResult}`,
-  //     position: 'bottom',
-  //     buttons: [
-  //       {
-  //         text: 'Open',
-  //         side: 'start',
-  //         handler: () => {
-  //           window.open(this.scanResult, '_system', 'location=yes');
-  //         },
-  //       },
-  //       {
-  //         text: 'Dismiss',
-  //         role: 'cancel',
-  //         side: 'start',
-  //         handler: () => {  // increaseProduct(product: Product) {
-  //   for (let [index, p] of this.cart.entries()) {
-  //     if (p.id === product.id) {
-  //       p.amount += 1;
-  //       if (p.amount == 0) {
-  //         this.cart.splice(index, 0, 1);
-  //       }
-  //     }
-  //   }
-  //   this.cartItemCount.next(this.cartItemCount.value - 1);
-  // }
-  //           toast.dismiss();
-  //         },
-  //       },
-  //     ],
-  //   });
-  //   toast.present();
-  // }
 
   async startScan() {
     // Not working on iOS standalone mode!

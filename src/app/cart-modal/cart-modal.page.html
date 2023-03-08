@@ -5,8 +5,8 @@
       color="danger"
       class="ion-text-wrap warning"
     >
-      WARNING: DO NOT click on TRANSFER DONE until you make payment via
-      transfer.
+      WARNING: DO NOT click on CONFIRM until your transfer payment is
+      successful. Click FAILED if the transfer did not succeed.
     </ion-label>
   </ion-item>
 
@@ -41,6 +41,7 @@
       ></ion-icon>
       when you begin adding items.
     </p>
+
     <ion-item-sliding *ngFor="let item of cartItems">
       <ion-item padding>
         <ion-label class="ion-text-wrap">{{item.title}} </ion-label>
@@ -67,12 +68,17 @@
       now.</ion-label
     >
   </ion-item>
-
+  <ion-button
+    *ngIf="cartItems?.length !== 0"
+    class="transfer-btn"
+    color="warning"
+    >failed</ion-button
+  >
   <ion-button
     *ngIf="cartItems?.length !== 0"
     class="transfer-btn"
     color="secondary"
     (click)="showLoading()"
-    >Transfer done</ion-button
+    >confirm</ion-button
   >
 </ion-content>
